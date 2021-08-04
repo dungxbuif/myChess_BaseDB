@@ -1,8 +1,8 @@
 const db = require('../models/index');
 
-const sendRequest = async (data) => {
-   const requesterID = +data.requesterID;
-   const receiverID = +data.receiverID;
+const sendRequest = async (dataRequest) => {
+   const requesterID = +dataRequest.requesterID;
+   const receiverID = +dataRequest.receiverID;
    return new Promise(async (resolve, reject) => {
       try {
          let data = await db.FriendRequests.create({
@@ -21,9 +21,9 @@ const sendRequest = async (data) => {
    });
 };
 
-const unfriend = async (data) => {
-   const requesterID = +data.requesterID;
-   const receiverID = +data.receiverID;
+const unfriend = async (dataRequest) => {
+   const requesterID = +dataRequest.requesterID;
+   const receiverID = +dataRequest.receiverID;
    return new Promise(async (resolve, reject) => {
       try {
          await db.FriendShips.destroy({
@@ -43,9 +43,9 @@ const unfriend = async (data) => {
    });
 };
 
-const acceptRequest = async (data) => {
-   const requesterID = +data.requesterID;
-   const receiverID = +data.receiverID;
+const acceptRequest = async (dataRequest) => {
+   const requesterID = +dataRequest.requesterID;
+   const receiverID = +dataRequest.receiverID;
    return new Promise(async (resolve, reject) => {
       try {
          const acceptStatus = await db.FriendRequests.findOne({

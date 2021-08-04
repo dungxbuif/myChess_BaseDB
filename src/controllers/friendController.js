@@ -45,7 +45,6 @@ const unfriend = async (req, res, next) => {
 
 const getListFriends = async (req, res, next) => {
    const playerID = +req.query.playerID;
-   console.log(playerID);
    try {
       let response = await friendService.getListFriends(playerID);
       return res.status(200).json(response);
