@@ -44,6 +44,12 @@ const unfriend = async (req, res, next) => {
 };
 
 const getListFriends = async (req, res, next) => {
+   if (!req.query.playerID)
+      return res.status(404).send({
+         code: 2,
+         message: 'Missing parameters',
+      });
+
    const playerID = +req.query.playerID;
    try {
       let response = await friendService.getListFriends(playerID);
@@ -57,9 +63,51 @@ const getListFriends = async (req, res, next) => {
    }
 };
 
+const sentRequest = async (req, res, next) => {
+   if (!req.query.playerID)
+      return res.status(404).send({
+         code: 2,
+         message: 'Missing parameters',
+      });
+
+   const playerID = +req.query.playerID;
+   try {
+      let response = await friendService.sentRequest(playerID);
+      return res.status(200).json(response);
+   } catch (e) {
+      console.log(e);
+      return res.status(500).json({
+         code: 0,
+         message: 'Get sent requests failed',
+      });
+   }
+};
+
+const receivedRequest = async (req, res, next) => {
+   if (!req.query.playerID)
+      return res.status(404).send({
+         code: 2,
+         message: 'Missing parameters',
+      });
+
+   const playerID = +req.query.playerID;
+   try {
+      let response = await friendService.receivedRequest(playerID);
+      return res.status(200).json(response);
+   } catch (e) {
+      console.log(e);
+      return res.status(500).json({
+         code: 0,
+         message: 'Get received requests failed',
+      });
+   }
+};
+
 module.exports = {
    sendRequest,
    acceptRequest,
    getListFriends,
    unfriend,
+   sentRequest,
+   receivedRequest,
 };

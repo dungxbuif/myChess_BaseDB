@@ -12,7 +12,6 @@ module.exports = {
             primaryKey: true,
             type: Sequelize.INTEGER,
          },
-         status: { type: Sequelize.BOOLEAN, allowNull: false },
          createdAt: { allowNull: false, type: Sequelize.DATE },
          updatedAt: { allowNull: false, type: Sequelize.DATE },
       });

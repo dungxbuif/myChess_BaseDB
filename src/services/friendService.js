@@ -1,4 +1,4 @@
-const db = require('../models/index');
+const db = require('../models');
 
 const sendRequest = async (dataRequest) => {
    const requesterID = +dataRequest.requesterID;
@@ -8,11 +8,11 @@ const sendRequest = async (dataRequest) => {
          let data = await db.FriendRequests.create({
             requesterID,
             receiverID,
-            status: false,
          });
 
          resolve({
             code: 1,
+            data,
             message: 'Send request succeed',
          });
       } catch (e) {
@@ -48,7 +48,7 @@ const acceptRequest = async (dataRequest) => {
    const receiverID = +dataRequest.receiverID;
    return new Promise(async (resolve, reject) => {
       try {
-         const acceptStatus = await db.FriendRequests.findOne({
+         const acceptStatus = await db.FriendRequests.destroy({
             where: {
                requesterID,
                receiverID,
@@ -56,9 +56,6 @@ const acceptRequest = async (dataRequest) => {
          });
 
          const data = [];
-
-         acceptStatus.status = true;
-         await acceptStatus.save();
          const requester = await db.Players.findOne({
             where: { playerID: requesterID },
          });
@@ -99,9 +96,51 @@ const getListFriends = async (playerID) => {
    });
 };
 
+const receivedRequest = async (playerID) => {
+   return new Promise(async (resolve, reject) => {
+      try {
+         const request = await db.Players.findOne({
+            where: { playerID },
+         });
+
+         const data = await request.getReceive();
+
+         resolve({
+            code: 1,
+            data,
+            message: 'Get received requests succeed',
+         });
+      } catch (e) {
+         reject(e);
+      }
+   });
+};
+
+const sentRequest = async (playerID) => {
+   return new Promise(async (resolve, reject) => {
+      try {
+         const request = await db.Players.findOne({
+            where: { playerID },
+         });
+
+         const data = await request.getRequest();
+
+         resolve({
+            code: 1,
+            data,
+            message: 'Get sent requests succeed',
+         });
+      } catch (e) {
+         reject(e);
+      }
+   });
+};
+
 module.exports = {
    sendRequest,
    acceptRequest,
    getListFriends,
    unfriend,
+   sentRequest,
+   receivedRequest,
 };
