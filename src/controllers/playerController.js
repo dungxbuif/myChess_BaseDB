@@ -74,10 +74,28 @@ const getAllPlayers = async (req, res, next) => {
    }
 };
 
+const handleLogin = async (req, res) => {
+   console.log(req.body);
+   let email = req.body.email;
+   let password = req.body.password;
+
+   if (!email || !password) {
+      return res.status(404).json({
+         code: 0,
+         message: 'Missing required parameter!',
+      });
+   }
+
+   let playerData = await playerService.handleLogin(email, password);
+
+   return res.status(200).json(playerData);
+};
+
 module.exports = {
    createPlayer,
    editPlayer,
    deletePlayer,
    getPlayer,
    getAllPlayers,
+   handleLogin,
 };

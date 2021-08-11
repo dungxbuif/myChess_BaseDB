@@ -95,10 +95,54 @@ const getAllPlayers = async () => {
    });
 };
 
+const handleLogin = async (email, password) => {
+   return new Promise(async (resolve, reject) => {
+      try {
+         let isPlayer = await db.Players.findOne({
+            where: { email },
+         });
+
+         let playerData = {
+            code: 1,
+            data: {
+               email,
+            },
+         };
+
+         if (isPlayer) {
+            let playerPassword = isPlayer.password;
+
+            if (password === playerPassword) {
+               playerData.message = `OK`;
+               playerData.data.name = isPlayer.name;
+               playerData.data.playerID = isPlayer.playerID;
+               playerData.data.point = isPlayer.point;
+            } else {
+               playerData.code = 0;
+               playerData.message = `Wrong password`;
+            }
+
+            resolve(playerData);
+            return;
+         } else {
+            playerData.code = 0;
+            playerData.data = {};
+            playerData.message = `Your player doesn't exist in the system. Please try again`;
+         }
+
+         resolve(playerData);
+         return;
+      } catch (e) {
+         reject(e);
+      }
+   });
+};
+
 module.exports = {
    createPlayer,
    editPlayer,
    deletePlayer,
    getPlayer,
    getAllPlayers,
+   handleLogin,
 };

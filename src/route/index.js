@@ -20,7 +20,7 @@ let initWebRoutes = (app) => {
    router.get('/api/received-request', friendController.receivedRequest);
 
    /* Example axios 
-   axios.post('localhost:2000/api/friend-request-sent',{data: });
+   axios.post('localhost:2000/api/friend-request-sent',data:{email} );
    axios.put('localhost:2000/api/accept-request',{data: });
    axios.delete('localhost:2000/api/unfriend',{data: });
    axios.get(`localhost:2000/api/get-list-friends?playerID${biến}`);
@@ -38,25 +38,20 @@ let initWebRoutes = (app) => {
    //ArticleS08aved
    router.post('/api/save-article', articleSavedController.saveArticle);
    router.delete('/api/delete-article', articleSavedController.deleteArticle);
-   router.get(
-      '/api/get-all-articlesaved',
-      articleSavedController.getAllArticleSaved,
-   );
+   router.get('/api/get-all-articlesaved', articleSavedController.getAllArticleSaved);
 
    //Players
    router.post('/api/create-player', playerController.createPlayer);
    router.put('/api/edit-player', playerController.editPlayer);
    router.delete('/api/delete-player', playerController.deletePlayer);
    router.get('/api/get-player', playerController.getPlayer);
-   router.get('/api/get-all-players', playerController.getPlayers);
+   router.get('/api/get-all-players', playerController.getAllPlayers);
+   router.post('/api/login', playerController.handleLogin);
 
    //ArticleS08aved
    router.post('/api/save-article', articleSavedController.saveArticle);
    router.delete('/api/delete-article', articleSavedController.deleteArticle);
-   router.get(
-      '/api/get-all-articlesaved',
-      articleSavedController.getAllArticleSaved,
-   );
+   router.get('/api/get-all-articlesaved', articleSavedController.getAllArticleSaved);
 
    return app.use('/', router);
 };
