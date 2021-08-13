@@ -25,9 +25,7 @@ npm i -D
 ### **3. Cấu hình react và Nodejs song song**
 
 > Cop thư mục React vào mức gốc của thư mục nodejs vừa mới tải về
-
 > Đổi tên thư mục React thành `client`
-
 > Để chạy gõ lệnh npm run dev
 
 ---
