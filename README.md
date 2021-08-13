@@ -35,6 +35,7 @@ npm i -D
 # Lưu ý
 
 > Khi muốn up git từ thư mục gốc up git bình thường sẽ không up thư mục react
+> 
 > Muốn up git react chạy lệnh:
 
 ```
