@@ -28,7 +28,7 @@ npm i -D
 > 
 > Đổi tên thư mục React thành `client`
 > 
-> Để chạy gõ lệnh npm run dev
+> Để chạy gõ lệnh `npm run dev`
 
 ---
 
