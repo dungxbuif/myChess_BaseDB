@@ -1,94 +1,196 @@
-const playerService = require('../services/playerService');
+const db = require('../models');
 
 const createPlayer = async (req, res, next) => {
-   const data = req.body;
+   if (!req.body.password || !req.body.name || !req.body.point || !req.body.email) {
+      res.status(404).json({
+         code: 0,
+         message: 'Missing required parameters',
+      });
+   }
 
+   const { password, name, point, email } = req.body;
    try {
-      let response = await playerService.createPlayer(data);
-      return res.status(200).json(response);
+      let data = await db.Players.create({ password, name, point, email });
+
+      return res.status(200).json({
+         code: 1,
+         data,
+         message: 'Create player succeed',
+      });
    } catch (e) {
       console.log(e);
       return res.status(500).json({
          code: 0,
-         message: 'Error from server',
+         message: `Create player failed. ${e.message}`,
       });
    }
 };
 
 const editPlayer = async (req, res, next) => {
-   const { playerID, title, content, thumbnail } = req.body;
+   if (
+      !req.body.password ||
+      !req.body.name ||
+      !req.body.point ||
+      !req.body.email ||
+      !req.body.playerID
+   ) {
+      res.status(404).json({
+         code: 0,
+         message: 'Missing reqried parameters',
+      });
+   }
+
+   let { password, name, point, email, playerID } = req.body;
+
    playerID = +playerID;
 
-   const data = { playerID, title, content, thumbnail };
-
    try {
-      let response = await playerService.editPlayer(data);
-      return res.status(200).json(response);
+      const player = await db.Players.findOne({
+         where: {
+            playerID,
+         },
+      });
+
+      player.password = password;
+      player.name = name;
+      player.point = point;
+
+      const data = player.save();
+
+      res.status(200).json({
+         code: 1,
+         message: 'Edit player succeed',
+         data,
+      });
    } catch (e) {
       console.log(e);
       return res.status(500).json({
          code: 0,
-         message: 'Edit player failed',
+         message: `Edit player failed. ${e.message}`,
       });
    }
 };
 
 const deletePlayer = async (req, res, next) => {
+   if (!req.body.playerID) {
+      res.status(404).json({
+         code: 0,
+         message: 'Missing reqried parameters',
+      });
+   }
    const playerID = +req.body.playerID;
    try {
-      let response = await playerService.deletePlayer(playerID);
-      return res.status(200).json(response);
+      await db.Players.destroy({
+         where: { playerID },
+      });
+
+      return res.status(200).json({
+         code: 1,
+         message: 'Delete player succeed',
+      });
    } catch (e) {
       console.log(e);
       return res.status(500).json({
          code: 0,
-         message: 'Delete player failed',
+         message: `Delete player failed. ${e.message}`,
       });
    }
 };
 
 const getPlayer = async (req, res, next) => {
+   if (!req.body.playerID) {
+      res.status(404).json({
+         code: 0,
+         message: 'Missing reqried parameters',
+      });
+   }
    const playerID = +req.query.playerID;
    try {
-      let response = await playerService.getPlayers(playerID);
-      return res.status(200).json(response);
+      const data = await db.Players.findOne({
+         where: { playerID },
+      });
+
+      return res.status(200).json({
+         code: 1,
+         data,
+         message: 'Get player succeed',
+      });
    } catch (e) {
       console.log(e);
       return res.status(500).json({
          code: 0,
-         message: 'Get player failed',
+         message: `Get player failed. ${e.message}`,
       });
    }
 };
 
 const getAllPlayers = async (req, res, next) => {
    try {
-      let response = await playerService.getAllPlayers();
-      return res.status(200).json(response);
+      const data = await db.Players.findAll();
+
+      res.status(200).json({
+         code: 1,
+         data,
+         message: 'Get all players succeed',
+      });
    } catch (e) {
       console.log(e);
       return res.status(500).json({
          code: 0,
-         message: 'Get all players failed',
+         message: `Get all players failed. ${e.message}`,
       });
    }
 };
 
 const handleLogin = async (req, res) => {
-   console.log(req.body);
-   let email = req.body.email;
-   let password = req.body.password;
-
-   if (!email || !password) {
+   if (!req.body.email || !password) {
       return res.status(404).json({
          code: 0,
          message: 'Missing required parameter!',
       });
    }
 
-   let playerData = await playerService.handleLogin(email, password);
+   let email = req.body.email;
+   let password = req.body.password;
 
-   return res.status(200).json(playerData);
+   try {
+      let isPlayer = await db.Players.findOne({
+         where: { email },
+      });
+
+      let playerData = {
+         code: 1,
+         data: {
+            email,
+         },
+      };
+
+      if (isPlayer) {
+         let playerPassword = isPlayer.password;
+
+         if (password === playerPassword) {
+            playerData.message = `OK`;
+            playerData.data.name = isPlayer.name;
+            playerData.data.playerID = isPlayer.playerID;
+            playerData.data.point = isPlayer.point;
+            return res.status(200).json(playerData);
+         } else {
+            playerData.code = 0;
+            playerData.message = `Wrong password`;
+            return res.status(404).json(playerData);
+         }
+      } else {
+         playerData.code = 0;
+         playerData.data = {};
+         playerData.message = `Your player doesn't exist in the system. Please try again`;
+         return res.status(404).json(playerData);
+      }
+   } catch (e) {
+      return res.status(500).json({
+         code: 1,
+         message: `Login error. ${e.message}`,
+      });
+   }
 };
 
 module.exports = {

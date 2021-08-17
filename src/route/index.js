@@ -5,6 +5,8 @@ const {
    articleSavedController,
    lessonController,
    playerController,
+   aiGameController,
+   blogController,
 } = require('../controllers/');
 
 let initWebRoutes = (app) => {
@@ -35,7 +37,7 @@ let initWebRoutes = (app) => {
    router.get('/api/get-lesson', lessonController.getLesson);
    router.get('/api/get-all-lessons', lessonController.getAllLessons);
 
-   //ArticleS08aved
+   //ArticleSaved
    router.post('/api/save-article', articleSavedController.saveArticle);
    router.delete('/api/delete-article', articleSavedController.deleteArticle);
    router.get('/api/get-all-articlesaved', articleSavedController.getAllArticleSaved);
@@ -48,10 +50,16 @@ let initWebRoutes = (app) => {
    router.get('/api/get-all-players', playerController.getAllPlayers);
    router.post('/api/login', playerController.handleLogin);
 
-   //ArticleS08aved
-   router.post('/api/save-article', articleSavedController.saveArticle);
-   router.delete('/api/delete-article', articleSavedController.deleteArticle);
-   router.get('/api/get-all-articlesaved', articleSavedController.getAllArticleSaved);
+   //AIGame
+   router.post('/api/save-aigame', aiGameController.saveAiGame);
+   router.delete('/api/delete-aigame', aiGameController.deleteAiGame);
+   router.get('/api/get-all-aigame', aiGameController.getAllAiGames);
+
+   //Blog
+   router.post('/api/create-blog', blogController.createBlog);
+   router.delete('/api/delete-blog', blogController.deleteBlog);
+   // router.post('/api/like-blog', aiGameController.getAllAiGames);
+   // router.get('/api/dislike-blog', aiGameController.getAllAiGames);
 
    return app.use('/', router);
 };

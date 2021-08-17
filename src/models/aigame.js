@@ -14,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
       {
          gameID: DataTypes.INTEGER,
          playerID: DataTypes.INTEGER,
-         playerID: DataTypes.INTEGER,
          time: DataTypes.INTEGER,
          result: DataTypes.BOOLEAN,
          moves: DataTypes.INTEGER,

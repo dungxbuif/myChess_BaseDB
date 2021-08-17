@@ -1,33 +1,58 @@
-const articleSavedService = require('../services/articleSavedService');
+const db = require('../models');
 
 const saveArticle = async (req, res, next) => {
    const data = req.body;
-   data.playerID = +data.playerID;
-   data.newsID = +data.newsID;
+   const playerID = +data.playerID;
+   const newsID = +data.newsID;
+
+   if (!playerID || !newsID) {
+      return res.status(404).json({
+         code: 0,
+         message: 'Missing required parameters',
+      });
+   }
+
    try {
-      let response = await ArticleSaved.saveArticle(data);
-      return res.status(200).json(response);
+      const data = await db.ArticleSaved.create({
+         playerID,
+         newsID,
+      });
+
+      return res.status(200).send({
+         code: 1,
+         data,
+         message: 'Saved article succeed',
+      });
    } catch (e) {
       console.log(e);
       return res.status(500).json({
          code: 0,
-         message: 'Error from server',
+         data,
+         message: `Saved article failed. ${e}`,
       });
    }
 };
 
 const deleteArticle = async (req, res, next) => {
    const data = req.body;
-   data.playerID = +data.playerID;
-   data.newsID = +data.newsID;
+   const playerID = +data.playerID;
+   const newsID = +data.newsID;
    try {
-      let response = await articleSavedService.deleteArticle(lessonID);
-      return res.status(200).json(response);
+      await db.ArticleSaved.destroy({
+         where: {
+            playerID,
+            newsID,
+         },
+      });
+      return res.status(200).json({
+         code: 1,
+         message: 'Deleted article succeed',
+      });
    } catch (e) {
       console.log(e);
       return res.status(500).json({
          code: 0,
-         message: 'Delete lesson failed',
+         message: `Delete lesson failed. ${e.message}`,
       });
    }
 };
@@ -35,13 +60,30 @@ const deleteArticle = async (req, res, next) => {
 const getAllArticleSaved = async (req, res, next) => {
    if (!req.query.playerID)
       return res.status(404).send({
-         code: 2,
+         code: 0,
          message: 'Missing parameters',
       });
-   const playerID = req.query.playerID;
+
+   const playerID = +req.query.playerID;
    try {
-      let response = await articleSavedService.getAllArticleSaved();
-      return res.status(200).json(response);
+      const data = await db.Players.findAll({
+         where: {
+            playerID,
+         },
+
+         include: [
+            {
+               model: db.Articles,
+               as: 'articleData',
+            },
+         ],
+      });
+
+      return res.status(200).json({
+         code: 1,
+         data,
+         message: 'Get list friend succeed',
+      });
    } catch (e) {
       console.log(e);
       return res.status(500).json({
