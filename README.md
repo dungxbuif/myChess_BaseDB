@@ -1,7 +1,6 @@
-# myChess_BaseDB
-# Hướng Dẫn cài đặt
+# Hướng Dẫn cài đặt node vaf React song song
 
-### **1. Clone project về**
+### **1. Clone project về hoặc pull mới nhất **
 
 Mở terminal tại thư mục muốn lưu project chạy câu lệnh:
 
@@ -11,7 +10,7 @@ git clone https://github.com/dungxbuif/myChess_BaseDB.git
 
 ---
 
-### **2. Tiến hành cài đặt thư viện**
+### **2. Tiến hành cài đặt thư viện (hoặc cài đặt lại thư viện cho chắc)**
 
 Mở terminal trong thư mục `Vừa mới tải về` gõ lệnh:
 
@@ -25,7 +24,7 @@ npm i -D
 ### **3. Cấu hình react và Nodejs song song**
 * Cop thư mục React vào mức gốc của thư mục nodejs vừa mới tải về
 * Đổi tên thư mục React thành `client`
-* Để chạy gõ lệnh `npm run dev`
+* Để chạy gõ lệnh `npm run dev` (đã cấu hình sẵn chỉ cần chạy lệnh này)
 
 ---
 
