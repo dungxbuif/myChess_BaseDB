@@ -1,4 +1,4 @@
-# Hướng Dẫn cài đặt node vaf React song song
+# Hướng Dẫn cài đặt node và React song song
 
 ### **1. Clone project về hoặc pull mới nhất **
 
