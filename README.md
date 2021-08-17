@@ -3,7 +3,7 @@
 
 ### **1. Clone project về**
 
-Mở terminal tại thư mục muốn lưu project chyaj câu lệnh:
+Mở terminal tại thư mục muốn lưu project chạy câu lệnh:
 
 ```
 git clone https://github.com/dungxbuif/myChess_BaseDB.git
