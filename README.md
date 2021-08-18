@@ -44,5 +44,5 @@ hoặc mở terminal trong thư mục client và up git như bình thường
 Khi có code mới mở terminal trong thư mục root `(nodejs)` và pull bình thường nodejs và react sẽ không ảnh hưởng đến nhau
 <<<<<<< HEAD
 =======
-
-> > > > > > > 6c3b8b11f8dbbf90579c7997d016e5eabdd2c7fd
+# DB
+![](https://raw.githubusercontent.com/dungxbuif/myChess_BaseDB/master/db.png)
