@@ -18,7 +18,11 @@ Mở terminal trong thư mục `Vừa mới tải về` gõ lệnh:
 npm i
 npm i -D
 ```
+Tạo bảng gõ lệnh:
 
+```
+npx sequelize db:migrate
+```
 ---
 
 ### **3. Cấu hình react và Nodejs song song**
