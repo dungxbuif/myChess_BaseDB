@@ -1,6 +1,6 @@
 # Hướng Dẫn cài đặt node và React song song
 
-### **1. Clone project về hoặc pull mới nhất **
+### 1. Clone project về hoặc pull mới nhất 
 
 Mở terminal tại thư mục muốn lưu project chạy câu lệnh:
 
