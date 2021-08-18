@@ -1,5 +1,6 @@
 const express = require('express');
 let router = express.Router();
+const error = require('../midllewares/error');
 const {
    friendController,
    articleSavedController,
@@ -58,8 +59,11 @@ let initWebRoutes = (app) => {
    //Blog
    router.post('/api/create-blog', blogController.createBlog);
    router.delete('/api/delete-blog', blogController.deleteBlog);
-   // router.post('/api/like-blog', aiGameController.getAllAiGames);
-   // router.get('/api/dislike-blog', aiGameController.getAllAiGames);
+   router.delete('/api/unreact-blog', blogController.unreactBlog);
+   router.post('/api/react-blog/:status', blogController.reactBlog);
+   router.get('/api/react-blog/:status', blogController.getReactBlog);
+
+   router.use(error);
 
    return app.use('/', router);
 };

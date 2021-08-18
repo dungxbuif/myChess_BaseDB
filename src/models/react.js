@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             type: DataTypes.INTEGER,
          },
-         point: DataTypes.INTEGER,
+         like: DataTypes.BOOLEAN,
       },
       {
          sequelize,
