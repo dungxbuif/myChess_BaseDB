@@ -1,6 +1,6 @@
 # Hướng Dẫn cài đặt node và React song song
 
-### **1. Clone project về hoặc pull mới nhất **
+### 1. Clone project về hoặc pull mới nhất 
 
 Mở terminal tại thư mục muốn lưu project chạy câu lệnh:
 
@@ -18,7 +18,11 @@ Mở terminal trong thư mục `Vừa mới tải về` gõ lệnh:
 npm i
 npm i -D
 ```
+Tạo bảng gõ lệnh:
 
+```
+npx sequelize db:migrate
+```
 ---
 
 ### **3. Cấu hình react và Nodejs song song**
@@ -42,7 +46,6 @@ cd client
 hoặc mở terminal trong thư mục client và up git như bình thường
 
 Khi có code mới mở terminal trong thư mục root `(nodejs)` và pull bình thường nodejs và react sẽ không ảnh hưởng đến nhau
-
-=======
+---
 # DB
 ![](https://raw.githubusercontent.com/dungxbuif/myChess_BaseDB/master/db.png)
