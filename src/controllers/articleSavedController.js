@@ -93,8 +93,26 @@ const getAllArticleSaved = async (req, res, next) => {
    }
 };
 
+const getAllArticle = async (req, res, next) => {
+   try {
+      const data = await db.Articles.findAll();
+
+      return res.status(200).json({
+         code: 1,
+         data,
+      });
+   } catch (e) {
+      console.log(e);
+      return res.status(500).json({
+         code: 0,
+         message: 'Get all lessons failed',
+      });
+   }
+};
+
 module.exports = {
    saveArticle,
    deleteArticle,
    getAllArticleSaved,
+   getAllArticle,
 };
