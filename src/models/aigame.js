@@ -12,7 +12,10 @@ module.exports = (sequelize, DataTypes) => {
    }
    AIGames.init(
       {
-         gameID: DataTypes.INTEGER,
+         gameID: {
+            primaryKey: true,
+            type: DataTypes.INTEGER,
+         },
          playerID: DataTypes.INTEGER,
          time: DataTypes.INTEGER,
          result: DataTypes.BOOLEAN,

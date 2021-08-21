@@ -19,7 +19,6 @@ module.exports = (sequelize, DataTypes) => {
    Blogs.init(
       {
          blogID: {
-            autoIncrement: true,
             primaryKey: true,
             type: DataTypes.INTEGER,
          },

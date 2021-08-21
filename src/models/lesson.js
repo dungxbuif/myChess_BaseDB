@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
    }
    Lessons.init(
       {
-         lessonID: DataTypes.INTEGER,
+         lessonID: { type: DataTypes.INTEGER, primaryKey: true },
          title: DataTypes.STRING,
          content: DataTypes.TEXT,
          thumbnail: DataTypes.STRING,

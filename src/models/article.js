@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
    }
    Articles.init(
       {
-         newsID: DataTypes.INTEGER,
+         newsID: { type: DataTypes.INTEGER, primaryKey: true },
          title: DataTypes.STRING,
          content: DataTypes.TEXT,
       },
