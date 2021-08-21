@@ -42,7 +42,7 @@ let initWebRoutes = (app) => {
    router.post('/api/save-article', articleSavedController.saveArticle);
    router.delete('/api/delete-article', articleSavedController.deleteArticle);
    router.get('/api/get-all-articlesaved', articleSavedController.getAllArticleSaved);
-   router.get('/api/get-articles', articleSavedController.getArticleSaved);
+   router.get('/api/get-articles', articleSavedController.getAllArticle);
 
    //Players
    router.post('/api/create-player', playerController.createPlayer);

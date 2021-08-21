@@ -6,7 +6,8 @@ const sendRequest = async (req, res, next) => {
          code: 0,
          message: 'Missing required parameters',
       });
-
+   const requesterID = +req.body.requesterID;
+   const receiverID = +req.body.receiverID;
    try {
       let data = await db.FriendRequests.create({
          requesterID,
