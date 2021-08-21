@@ -62,6 +62,7 @@ let initWebRoutes = (app) => {
    router.delete('/api/unreact-blog', blogController.unreactBlog);
    router.post('/api/react-blog/:status', blogController.reactBlog);
    router.get('/api/react-blog/:status', blogController.getReactBlog);
+   router.get('/api/get-all-blog-by-playerID', blogController.getAllBlogByPlayerID);
 
    router.use(error);
 

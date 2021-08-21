@@ -123,10 +123,54 @@ const getReactBlog = async (req, res, next) => {
    }
 };
 
+const getAllBlogByPlayerID = async (req, res, next) => {
+   if (!req.query.playerID) {
+      res.status(404).json({
+         code: 0,
+         message: 'Missing required parameters',
+      });
+   }
+   const playerID = +req.query.playerID;
+   try {
+      const reactBlog = await db.Reacts.findAll({
+         where: { playerID },
+      });
+
+      let reactObj = {};
+      if (reactBlog.length) {
+         reactBlog.forEach((element) => {
+            reactObj[element.blogID] = element.like;
+         });
+      }
+
+      const blog = await db.Blogs.findAll({
+         raw: false,
+      });
+      let data = blog.map((item) => item.dataValues);
+      if (Object.entries(reactObj).length) {
+         data = data.map((item) => {
+            if (reactObj[item.blogID] !== undefined) {
+               item.like = reactObj[item.blogID];
+               return item;
+            }
+            return item;
+         });
+      }
+
+      res.status(200).json({
+         code: 1,
+         data,
+      });
+   } catch (ex) {
+      next(ex);
+   }
+};
+
 module.exports = {
    createBlog,
    deleteBlog,
    unreactBlog,
    reactBlog,
    getReactBlog,
+   getAllBlogByPlayerID,
 };
