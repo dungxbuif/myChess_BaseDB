@@ -33,7 +33,9 @@ const deleteBlog = async (req, res, next) => {
    const blogID = +req.body.blogID;
 
    try {
-      await db.Blogs.destroy({ blogID });
+      await db.Blogs.destroy({
+         where:{ blogID }
+      });
 
       res.status(200).json({
          code: 1,
@@ -51,7 +53,7 @@ const unreactBlog = async (req, res, next) => {
          message: 'Missing required parameters',
       });
    }
-   const blogID = +req.query.status;
+   const blogID = +req.query.blogID;
    const playerID = +req.query.playerID;
    try {
       await db.Reacts.destroy({
@@ -67,6 +69,7 @@ const unreactBlog = async (req, res, next) => {
    }
 };
 const reactBlog = async (req, res, next) => {
+   console.log(req.body);
    if (!req.params.status || !req.body.playerID || !req.body.blogID) {
       res.status(404).json({
          code: 0,
@@ -88,7 +91,7 @@ const reactBlog = async (req, res, next) => {
          react.save();
          data = react;
       } else {
-         data = await db.Reacts.create({ blogID, playerID, status });
+         data = await db.Reacts.create({ blogID, playerID, like: status });
       }
 
       res.status(200).json({
@@ -144,6 +147,10 @@ const getAllBlogByPlayerID = async (req, res, next) => {
       }
 
       const blog = await db.Blogs.findAll({
+         include: {
+            model: db.Players, 
+            as: 'reactData',
+         },
          raw: false,
       });
       let data = blog.map((item) => item.dataValues);

@@ -12,6 +12,7 @@ module.exports = {
          password: { type: Sequelize.STRING, allowNull: false },
          name: { type: Sequelize.STRING, allowNull: false },
          point: { type: Sequelize.INTEGER, allowNull: true },
+         img: { type: Sequelize.STRING, allowNull: true },
          createdAt: { allowNull: false, type: Sequelize.DATE },
          updatedAt: { allowNull: false, type: Sequelize.DATE },
       });

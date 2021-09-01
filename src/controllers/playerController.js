@@ -1,16 +1,17 @@
 const db = require('../models');
 
 const createPlayer = async (req, res, next) => {
-   if (!req.body.password || !req.body.name || !req.body.point || !req.body.email) {
+   console.log(req.body);
+   if (!req.body.password || !req.body.name || !req.body.point || !req.body.email || !req.body.img) {
       res.status(404).json({
          code: 0,
          message: 'Missing required parameters',
       });
    }
 
-   const { password, name, point, email } = req.body;
+   const { password, name, point, email, img } = req.body;
    try {
-      let data = await db.Players.create({ password, name, point, email });
+      let data = await db.Players.create({ password, name, point, email, img });
 
       return res.status(200).json({
          code: 1,
@@ -127,7 +128,6 @@ const getPlayer = async (req, res, next) => {
 const getAllPlayers = async (req, res, next) => {
    try {
       const data = await db.Players.findAll();
-
       res.status(200).json({
          code: 1,
          data,

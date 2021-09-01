@@ -16,6 +16,8 @@ module.exports = (sequelize, DataTypes) => {
          newsID: { type: DataTypes.INTEGER, primaryKey: true },
          title: DataTypes.STRING,
          content: DataTypes.TEXT,
+         img: DataTypes.TEXT,
+         link: DataTypes.TEXT,
       },
       {
          sequelize,

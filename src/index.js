@@ -7,10 +7,10 @@ const chalk = require('chalk');
 const app = express();
 
 //config app
-app.use(cors({ origin: true }));
-
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 
 route(app);
 

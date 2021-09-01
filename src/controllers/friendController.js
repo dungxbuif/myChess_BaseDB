@@ -1,7 +1,7 @@
 const db = require('../models');
 
 const sendRequest = async (req, res, next) => {
-   if (!req.body.requesterID || !req.body.requesterID)
+   if (!req.body.requesterID || !req.body.receiverID)
       return res.status(404).json({
          code: 0,
          message: 'Missing required parameters',
@@ -41,6 +41,7 @@ const acceptRequest = async (req, res, next) => {
 
    try {
       await db.FriendRequests.destroy({
+
          where: {
             requesterID,
             receiverID,

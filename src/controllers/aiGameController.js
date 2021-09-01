@@ -4,20 +4,20 @@ const saveAiGame = async (req, res, next) => {
    const dataReq = req.body;
    dataReq.time = +dataReq.time;
    dataReq.moves = +dataReq.moves;
-
-   if (
-      !dataReq.playerID ||
-      !dataReq.time ||
-      !dataReq.result ||
-      !dataReq.moves ||
-      !dataReq.level ||
-      !dataReq.date
-   ) {
-      return res.status(404).json({
-         code: 0,
-         message: 'Missing required parameters',
-      });
-   }
+   console.log(dataReq);
+   // if (
+   //    !dataReq.playerID ||
+   //    !dataReq.time ||
+   //    !dataReq.result ||
+   //    !dataReq.moves ||
+   //    !dataReq.level ||
+   //    !dataReq.date
+   // ) {
+   //    return res.status(404).json({
+   //       code: 0,
+   //       message: 'Missing required parameters',
+   //    });
+   // }
 
    try {
       let data = await db.AIGames.create({
@@ -46,7 +46,9 @@ const deleteAiGame = async (req, res, next) => {
       });
    }
    try {
-      let data = await db.AIGames.destroy({ gameID });
+      let data = await db.AIGames.destroy({
+         where:{ gameID }
+      });;
 
       return res.status(200).json({
          code: 1,
