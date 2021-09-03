@@ -41,6 +41,7 @@ let initWebRoutes = (app) => {
    //ArticleSaved
    router.post('/api/save-article', articleSavedController.saveArticle);
    router.delete('/api/delete-article', articleSavedController.deleteArticle);
+   router.put('/api/edit-articles', articleSavedController.editArticle);
    router.get('/api/get-all-articlesaved', articleSavedController.getAllArticleSaved);
    router.get('/api/get-articles', articleSavedController.getAllArticle);
 

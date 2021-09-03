@@ -1,46 +1,69 @@
 const db = require('../models');
 
 const saveArticle = async (req, res, next) => {
-   const data = req.body;
-   const playerID = +data.playerID;
-   const newsID = +data.newsID;
-
-   if (!playerID || !newsID) {
-      return res.status(404).json({
-         code: 0,
-         message: 'Missing required parameters',
-      });
-   }
-
    try {
-      const data = await db.ArticleSaved.create({
-         playerID,
-         newsID,
+      const data = await db.Articles.create({
+         ...req.body
       });
 
       return res.status(200).send({
          code: 1,
          data,
-         message: 'Saved article succeed',
+         message: 'Create article succeed',
       });
    } catch (e) {
       console.log(e);
       return res.status(500).json({
          code: 0,
          data,
-         message: `Saved article failed. ${e}`,
+         message: `Create article failed. ${e}`,
       });
    }
 };
 
-const deleteArticle = async (req, res, next) => {
-   const data = req.body;
-   const playerID = +data.playerID;
-   const newsID = +data.newsID;
+const editArticle = async (req, res, next) => {
+   let reqObj = {...req.body};
+   reqObj.newsID = +reqObj.newsID;
    try {
-      await db.ArticleSaved.destroy({
+      let article = await db.Articles.findOne({
          where: {
-            playerID,
+            newsID: reqObj.newsID,
+         }
+      });
+      if(article) {
+         article.link = reqObj.link;
+         article.content = reqObj.content;
+         article.img = reqObj.img;
+         article.title = reqObj.title;
+         const data = await article.save();
+         return res.status(200).send({
+            code: 1,
+            data,
+            message: 'Create article succeed',
+         });
+      } else {
+         return res.status(404).send({
+            code: 0,
+            message: 'Articles not found',
+         });
+      }
+     
+   } catch (e) {
+      console.log(e);
+      return res.status(500).json({
+         code: 0,
+         data,
+         message: `Create article failed. ${e}`,
+      });
+   }
+};
+
+
+const deleteArticle = async (req, res, next) => {
+   const newsID = +req.body.newsID;
+   try {
+      await db.Articles.destroy({
+         where: {
             newsID,
          },
       });
@@ -115,4 +138,5 @@ module.exports = {
    deleteArticle,
    getAllArticleSaved,
    getAllArticle,
+   editArticle,
 };

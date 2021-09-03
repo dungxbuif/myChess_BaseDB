@@ -33,6 +33,7 @@ const deleteBlog = async (req, res, next) => {
    const blogID = +req.body.blogID;
 
    try {
+      await db.Reacts.destroy({ where: { blogID } });
       await db.Blogs.destroy({
          where:{ blogID }
       });
